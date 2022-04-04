@@ -1,0 +1,8 @@
+## SECTION=project_specific
+
+config HELLO
+	bool
+	prompt "hello"
+	select HOST_CMAKE
+	help
+	  FIXME
