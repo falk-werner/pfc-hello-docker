@@ -3,6 +3,13 @@ ARG FW_VERSION=21.0.0
 
 FROM ${REGISTRY_PREFIX}me8i/pfc-builder:${FW_VERSION} as builder
 
+ARG USERID=1000
+RUN bash -c "[[ \"${USERID}\" == \"$(id -u user)\" ]] || ( \
+        usermod -u \"${USERID}\" user \
+        && groupmod -g \"${USERID}\" user \
+        && chown user:user -R /home/user \
+    )"
+
 COPY --chown=user:user ptxdist/config/ /home/user/ptxproj/configs/wago-pfcXXX/
 COPY --chown=user:user ptxdist/rules/ /home/user/ptxproj/rules
 
