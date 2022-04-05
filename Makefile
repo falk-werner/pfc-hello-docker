@@ -13,14 +13,14 @@ all: image
 builder: $(OUT_DIR)/pfc-hello-builder
 
 $(OUT_DIR)/root.tgz: builder | $(OUT_DIR)
-	docker run --rm -it --user "$(USERID)" -v "`realpath $(OUT_DIR)`:/backup" pfc-hello-builder cp /home/user/ptxproj/platform-wago-pfcXXX/images/root.tgz /backup
+	docker run --rm -it --user "$(USERID)" -v "`realpath src`:/home/user/ptxproj/local_src/hello" -v "`realpath $(OUT_DIR)`:/backup" pfc-hello-builder /home/user/build.sh
 
 $(OUT_DIR)/pfc-hello-builder: docker/builder.dockerfile  Makefile | $(OUT_DIR)
 	docker buildx build $(DOCKER_BUILDFLAGS) --iidfile $@ --file $< --tag pfc-hello-builder .
 
 .PHONY: run
 run: builder | $(IMAGE_DIR)
-	docker run --rm -it --user "$(USERID)" -v "`realpath $(OUT_DIR)`:/backup" pfc-hello-builder bash
+	docker run --rm -it --user "$(USERID)" -v "`realpath src`:/home/user/ptxproj/local_src/hello" -v "`realpath $(OUT_DIR)`:/backup" pfc-hello-builder bash
 
 .PHONY: image
 image: $(OUT_DIR)/pfc-hello
