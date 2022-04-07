@@ -27,9 +27,9 @@ Use make to create the docker image. The first build will take some time, consec
 
 - copy the image to PFC200 G2 device  
   `scp build/pfc-hello.dockerimage root@pfc:/tmp`
-- load the image
+- load the image  
   `ssh root@pfc docker load -i /tmp/pfc-hello.dockerimage`
-- run the image
+- run the image  
   `ssh -t root@pfc docker run -it --rm pfc-hello`
 
 ## Build Logic
