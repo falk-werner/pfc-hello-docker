@@ -1,7 +1,10 @@
 ARG REGISTRY_PREFIX=''
-ARG FW_VERSION=21.0.0
+ARG FW_VERSION=21.0.1
 
 FROM ${REGISTRY_PREFIX}me8i/pfc-builder:${FW_VERSION} as builder
+
+RUN tar -xf /home/user/ptxproj.tar.gz -C /home/user
+RUN rm /home/user/ptxproj.tar.gz
 
 ARG USERID=1000
 RUN bash -c "[[ \"${USERID}\" == \"$(id -u user)\" ]] || ( \
